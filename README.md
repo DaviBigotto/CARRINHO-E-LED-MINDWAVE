@@ -28,8 +28,6 @@ Utilizamos a linguagem do arduino para a realização dos códigos, e utilizamos
   *   AT+IAC=9E8B33
   *   AT+CLASS=0
   *   AT+INQM=1,9,48
-  *   
-  *   Lozano Ramirez Angel Ivan
   *   02.07.2018
   *   NOTE: Set the Serial monitor with NL&CR and 9600 baud
 */
