@@ -1,21 +1,25 @@
-#DESCRIÇÂO:
+# CARRINHO E LED MINDWAVE
+
+### 1. DESCRIÇÃO:
 
  ● Nosso projeto foi com base na utilização do aparelho mindwave, para a captação de ondas cerebrais e medir o nível de concentração. Sendo assim, fizemos um carrinho básico de arduino com motores DC para se mover, e o módulo  hc-05 para realizar a conexão bluetooth com o mindwave. Além do carrinho, emparelhamos 4 Leds em sequencia na protoboard, e, utilizando também um arduino e o módulo hc-05, conforme o nível de concentração da pessoa, os leds vão se acendendo gradualmente. Já o carrinho, ao atingir o nível de 55% e concentração, ele anda para frente. Para realizar a conexão do mindwave com os módulos HC-05, necessitamos utilizar os comandos AT, para pegar a serial do mindwave.
 
-❏ ❐ ❑ ❒ ❏ ❐ ❏ ❐ ❑ ❒ ❏ ❐ ❏ ❐ ❑ ❒ ❏ ❐ ❏ ❐ ❑ ❒ ❏ ❐❏ ❐ ❑ ❒ ❏ ❐ ❏ ❐ ❑ ❒ ❏ ❐ ❏ ❐ ❑ ❒ ❏ ❐ ❏ ❐ ❑ ❒ ❏ ❐ ❏
+---
 
-#BIBLIOTECAS UTILIZADAS:
+### 2. BIBLIOTECAS UTILIZADAS:
 
 Utilizamos a linguagem do arduino para a realização dos códigos, e utilizamos algumas bibliotecas como:
 
 #include <SoftwareSerial.h>
 
-#include <Mindwave.h>
+#include <Mindwave.h> 
+  
+  -> [Mindwave.h](https://github.com/orgicus/Mindwave.git), Baixar o Arquivo Zipado e adicionar no aplicativo do arduino!
 
-❏ ❐ ❑ ❒ ❏ ❐ ❏ ❐ ❑ ❒ ❏ ❐ ❏ ❐ ❑ ❒ ❏ ❐ ❏ ❐ ❑ ❒ ❏ ❐❏ ❐ ❑ ❒ ❏ ❐ ❏ ❐ ❑ ❒ ❏ ❐ ❏ ❐ ❑ ❒ ❏ ❐ ❏ ❐ ❑ ❒ ❏ ❐ ❏
+---
 
-
-#COMANDOS AT
+### 3. COMANDOS AT
+Primeiro passo para configurar o arduino, rodar cada comando por vez:
 
 /*
   *Configuration through AT Commands for HC-05
@@ -52,138 +56,15 @@ void loop(){
   if( Serial.available() ) BT.write(Serial.read());
 }
 
-❏ ❐ ❑ ❒ ❏ ❐ ❏ ❐ ❑ ❒ ❏ ❐ ❏ ❐ ❑ ❒ ❏ ❐ ❏ ❐ ❑ ❒ ❏ ❐❏ ❐ ❑ ❒ ❏ ❐ ❏ ❐ ❑ ❒ ❏ ❐ ❏ ❐ ❑ ❒ ❏ ❐ ❏ ❐ ❑ ❒ ❏ ❐ ❏
+---
+
+### 4. COMANDOS DOS LEDS:
 
 
-COMANDOS DOS LEDS:
 
-#include <Mindwave.h>  // Inclui a biblioteca Mindwave
+---
 
-Mindwave mindwave;     // Inicializa o objeto Mindwave
-
-
-// Definição dos pinos dos LEDs
-
-int led1 = 2;  // LED 1 conectado ao pino 2
-
-int led2 = 3;  // LED 2 conectado ao pino 3
-
-int led3 = 4;  // LED 3 conectado ao pino 4
-
-int led4 = 5;  // LED 4 conectado ao pino 5
-
-
-void setup() {
-  
-  Serial.begin(57600);  // Inicia a comunicação serial a 57600 baud rate
- 
-  // Configura os pinos dos LEDs como saída
-  
-  pinMode(led1, OUTPUT);
-  
-  pinMode(led2, OUTPUT);
- 
-  pinMode(led3, OUTPUT);
- 
-  pinMode(led4, OUTPUT);
-
-
-  Serial.println("Mindwave and LED control initialized");
-}
-
-
-// Função chamada quando novos dados do Mindwave estão disponíveis
-
-void onMindwaveData() {
-  
-  int attentionValue = mindwave.attention();  // Lê o nível de atenção
-
-
- 
-  // Verifica se o nível de atenção é 0 ou 1 e exibe "Carregando"
-  
-  if (attentionValue == 0 || attentionValue == 1) {
-    
-    Serial.println("Carregando...");
- 
-  } else {
-    
-    // Mostra o valor de atenção no monitor serial
-   
-    Serial.print("Attention value: ");
-   
-    Serial.println(attentionValue);
-
-
-   
-    // Controle dos LEDs baseado no nível de atenção
-   
-    if (attentionValue >= 0 && attentionValue <= 25) {
-    
-      digitalWrite(led1, HIGH);
-    
-      digitalWrite(led2, LOW);
-    
-      digitalWrite(led3, LOW);
-    
-      digitalWrite(led4, LOW);
-    
-    }
-    
-    else if (attentionValue > 25 && attentionValue <= 50) {
-      
-      digitalWrite(led1, HIGH);
-      
-      digitalWrite(led2, HIGH);
-      
-      digitalWrite(led3, LOW);
-     
-      digitalWrite(led4, LOW);
-   
-    }
-   
-    else if (attentionValue > 50 && attentionValue <= 75) {
-     
-      digitalWrite(led1, HIGH);
-     
-      digitalWrite(led2, HIGH);
-      
-      digitalWrite(led3, HIGH);
-      
-      digitalWrite(led4, LOW);
-   
-    }
-    
-    else if (attentionValue > 75 && attentionValue <= 100) {
-      
-      digitalWrite(led1, HIGH);
-     
-      digitalWrite(led2, HIGH);
-     
-      digitalWrite(led3, HIGH);
-     
-      digitalWrite(led4, HIGH);
-  
-    }
-
-  }
-
-}
-
-
-void loop() {
-  
-  // Atualiza os dados do Mindwave e chama a função onMindwaveData quando há novos dados
-  
-  mindwave.update(Serial, onMindwaveData);
-
-}
-
-
-❏ ❐ ❑ ❒ ❏ ❐ ❏ ❐ ❑ ❒ ❏ ❐ ❏ ❐ ❑ ❒ ❏ ❐ ❏ ❐ ❑ ❒ ❏ ❐❏ ❐ ❑ ❒ ❏ ❐ ❏ ❐ ❑ ❒ ❏ ❐ ❏ ❐ ❑ ❒ ❏ ❐ ❏ ❐ ❑ ❒ ❏ ❐ ❏
-
-
-COMANDOS DO CARRINHO:
+### 5. COMANDOS DO CARRINHO:
 
 #include <SoftwareSerial.h>
 
@@ -313,10 +194,9 @@ void loop() {
 }
 
 
-❏ ❐ ❑ ❒ ❏ ❐ ❏ ❐ ❑ ❒ ❏ ❐ ❏ ❐ ❑ ❒ ❏ ❐ ❏ ❐ ❑ ❒ ❏ ❐❏ ❐ ❑ ❒ ❏ ❐ ❏ ❐ ❑ ❒ ❏ ❐ ❏ ❐ ❑ ❒ ❏ ❐ ❏ ❐ ❑ ❒ ❏ ❐ ❏
+---
 
-
-COMPONENTES UTILIZADOS:
+### 6. COMPONENTES UTILIZADOS:
 
 ● 2 Arduinos
 
@@ -341,13 +221,12 @@ COMPONENTES UTILIZADOS:
 ● Shield PonteH L298n
 
 
-❏ ❐ ❑ ❒ ❏ ❐ ❏ ❐ ❑ ❒ ❏ ❐ ❏ ❐ ❑ ❒ ❏ ❐ ❏ ❐ ❑ ❒ ❏ ❐❏ ❐ ❑ ❒ ❏ ❐ ❏ ❐ ❑ ❒ ❏ ❐ ❏ ❐ ❑ ❒ ❏ ❐ ❏ ❐ ❑ ❒ ❏ ❐ ❏
-
-Funcionamento:
+---
+### 7. FUNCIONAMENTO:
 
   ● O Mindwave capta a atividade elétrica do cérebro e calcula o nível de concentração do usuário. Esse nível é enviado ao Arduino, que, por sua vez, controla o motor DC do carrinho. Quando a concentração aumenta, o carrinho avança; quando a concentração diminui, o carrinho para. O mesmo ocorre para os Leds, conforme aumenta, acende mais leds, caso diminua a concentração, os leds apagam.
 
-Objetivos:
+### 8. OBJETIVOS:
   
   ● Demonstrar a relação entre atividade cerebral e comportamento físico.
   
@@ -356,9 +235,8 @@ Objetivos:
   ● Demonstrar a infinidade de ideais e funções que podemos implementar para ajudar pessoas necessitadas, como uma mão robótica, para uma pessoa que não possui mão.
 
 
-❏ ❐ ❑ ❒ ❏ ❐ ❏ ❐ ❑ ❒ ❏ ❐ ❏ ❐ ❑ ❒ ❏ ❐ ❏ ❐ ❑ ❒ ❏ ❐❏ ❐ ❑ ❒ ❏ ❐ ❏ ❐ ❑ ❒ ❏ ❐ ❏ ❐ ❑ ❒ ❏ ❐ ❏ ❐ ❑ ❒ ❏ ❐ ❏
-
-Resultados Esperados:
+---
+### 9. RESULTADOS ESPERADOS:
 
   ● Promover a capacidade que a tecnologia possui de mudar vidas e realizar adaptações para casos necessitados, pessando na temática pós apocaliptica da Fecart.
 
