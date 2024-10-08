@@ -19,43 +19,14 @@ Utilizamos a linguagem do arduino para a realização dos códigos, e utilizamos
 ---
 
 ### 3. COMANDOS AT
-Primeiro passo para configurar o arduino, rodar cada comando por vez:
-
-/*
-  *Configuration through AT Commands for HC-05
-  *Pairing  Headset Neurosky Mindwave Mobile with Arduino
-  *Commands:
-  *   AT+UART=57600,0,0
-  *   AT+ROLE=1
-  *   AT+PSWD="0000"
-  *   AT+CMODE=0
-  *   AT+BIND=0081,F9,12CF79
-  *   AT+IAC=9E8B33
-  *   AT+CLASS=0
-  *   AT+INQM=1,9,48
-  *   02.07.2018
-  *   NOTE: Set the Serial monitor with NL&CR and 9600 baud
-*/
-
-
-#include <SoftwareSerial.h>
-
-SoftwareSerial BT(11,10); //Rx/Tx
- 
-void setup(){
-  
-  BT.begin(38400);
- 
-  Serial.begin(9600);
-}
- 
-void loop(){
-  
-  if( BT.available() ) Serial.write( BT.read() );
-  
-  if( Serial.available() ) BT.write(Serial.read());
-}
-
+- AT+UART=57600,0,0
+- AT+ROLE=1
+- AT+PSWD="0000"
+- AT+CMODE=0
+- AT+BIND=xxxx,xx,xxxxxx (endereço MAC do Mindwave, utilizando esse formato, obtenha conectando ele ao bluetooth de outro dispositivo)
+- AT+IAC=9E8B33
+- AT+CLASS=0
+- AT+INQM=1,9,48
 ---
 
 ### 4. COMANDOS DOS LEDS:
