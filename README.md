@@ -70,7 +70,7 @@ Código no arquivo "ComadoDoCarrinho.ino"
 ### 7. FUNCIONAMENTO:
 
   ● O Mindwave capta a atividade elétrica do cérebro e calcula o nível de concentração do usuário. Esse nível é enviado ao Arduino, que, por sua vez, controla o motor DC do carrinho. Quando a concentração aumenta, o carrinho avança; quando a concentração diminui, o carrinho para. O mesmo ocorre para os Leds, conforme aumenta, acende mais leds, caso diminua a concentração, os leds apagam.
-
+---
 ### 8. OBJETIVOS:
   
   ● Demonstrar a relação entre atividade cerebral e comportamento físico.
